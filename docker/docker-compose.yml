@@ -12,16 +12,18 @@ services:
         - INSTALL_XDEBUG=true
     environment:
       PHP_IDE_CONFIG: "serverName=Docker"
+      PHP_INI_SCAN_DIR: "/usr/local/etc/php/custom.d:/usr/local/etc/php/conf.d"
     volumes:
       - /var/www/vendor/
       - ./../:/var/www/
+      - ./php-ini:/usr/local/etc/php/custom.d
 
   nginx:
     container_name: nginx
     build:
       context: ./nginx
     ports:
-      - 888:80
+      - 8080:80
     volumes:
       - ..:/var/www:rw
     depends_on:

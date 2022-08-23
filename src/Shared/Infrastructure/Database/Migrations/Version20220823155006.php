@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220313132226 extends AbstractMigration
+final class Version20220823155006 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,6 +20,10 @@ final class Version20220313132226 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('CREATE SEQUENCE emplpoyee_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE refresh_tokens_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE TABLE emplpoyee (id INT NOT NULL, name VARCHAR(255) NOT NULL, parent_name VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_CCA824555E237E06 ON emplpoyee (name)');
         $this->addSql('CREATE TABLE refresh_tokens (id INT NOT NULL, refresh_token VARCHAR(128) NOT NULL, username VARCHAR(255) NOT NULL, valid TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_9BACE7E1C74F2195 ON refresh_tokens (refresh_token)');
     }
@@ -28,6 +32,9 @@ final class Version20220313132226 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA public');
+        $this->addSql('DROP SEQUENCE emplpoyee_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE refresh_tokens_id_seq CASCADE');
+        $this->addSql('DROP TABLE emplpoyee');
         $this->addSql('DROP TABLE refresh_tokens');
     }
 }
